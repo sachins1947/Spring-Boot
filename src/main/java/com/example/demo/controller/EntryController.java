@@ -14,7 +14,6 @@ import com.example.demo.services.UserEntryService;
 
 import java.time.LocalTime;
 import java.util.*;
-
 @RestController
 @RequestMapping("/journal")
 public class EntryController {
@@ -25,7 +24,7 @@ private UserEntryService userEntryService;
      @GetMapping("{name}")
      public ResponseEntity<?> getJournalEntriesofUser(@PathVariable String name) {
          Users user = userEntryService.findByUsername(name);
-         List<JornalEntry> list =   user.getJornalEntries();
+         List<JornalEntry> list =  user.getJornalEntries();
          if(list!=null && !list.isEmpty()){
              return new ResponseEntity<>(list,HttpStatus.OK);
          }

@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+// It'll get the name of the collection automatically based on the class Name
 @Data
 @NoArgsConstructor
-// It'll get the name of the collection automatically based on the class Name
 @Document
 public class Users {
     @Id
@@ -21,7 +21,7 @@ public class Users {
     @Indexed(unique = true)
     private String name;
     private String password;
-
     @DBRef
     private List<JornalEntry> jornalEntries = new ArrayList<>();
+    private List<String> roles;
 }

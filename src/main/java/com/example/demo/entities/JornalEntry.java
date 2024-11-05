@@ -14,8 +14,5 @@ public class JornalEntry {
     private ObjectId id;
     private String name;
     private String description;
-    private LocalTime date;
-
-    // Getter for id
-   
+    private LocalTime date;  
 }
