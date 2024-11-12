@@ -21,7 +21,7 @@ public class UserEntryService {
     private static final PasswordEncoder password = new BCryptPasswordEncoder();
     public  void saveEntry(Users userentry){
         userentry.setPassword(password.encode(userentry.getPassword()));
-        // userentry.setRoles(Arrays.asList("USER"));
+        userentry.setRoles(Arrays.asList("USER"));
         userEntryRepository.save(userentry);
     }
     public List<Users> getAll(){

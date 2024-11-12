@@ -20,11 +20,13 @@ import com.example.demo.services.CustomUserDetailService;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private CustomUserDetailService customUserDetailService;
+    private final CustomUserDetailService customUserDetailService;
+    private final PasswordEncoder passwordEncoder; // Injected via constructor
 
     @Autowired
-    public SpringSecurity(CustomUserDetailService customUserDetailService) {
-        this.customUserDetailService = customUserDetailService; // Setter injection
+    public SpringSecurity(CustomUserDetailService customUserDetailService, @Lazy PasswordEncoder passwordEncoder) {
+        this.customUserDetailService = customUserDetailService;
+        this.passwordEncoder = passwordEncoder; // Constructor injection of the passwordEncoder
     }
 
     @Bean
@@ -38,7 +40,7 @@ public class SpringSecurity {
                 .requestMatchers("/journal/**", "/user/**").authenticated()
                 .anyRequest().permitAll()
             );
-
+          http.httpBasic(httpBasic->{});
         return http.build();
     }
 
@@ -47,14 +49,14 @@ public class SpringSecurity {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // @Lazy
-    // @Bean
-    // PasswordEncoder passwordEncoder() {
-    //     return new BCryptPasswordEncoder();
-    // }
+    @Lazy
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder); // Use the injected passwordEncoder
     }
 }

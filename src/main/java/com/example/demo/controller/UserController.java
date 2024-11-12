@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -32,8 +32,9 @@ public class UserController {
     //  }
     @PutMapping("/update-user")
 public ResponseEntity<?> updateUser(@RequestBody Users user) {
-    org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String name = authentication.getName();
+    System.out.println(name);
     Users u = userEntryService.findByUsername(name);
 
     if (u == null) {
