@@ -44,7 +44,7 @@ public ResponseEntity<?> updateUser(@RequestBody Users user) {
     try {
         u.setName(user.getName());
         u.setPassword(user.getPassword()); // Make sure to encode the password
-        userEntryService.saveEntry(u);
+        userEntryService.save_new_user(u);
         return new ResponseEntity<>(u, HttpStatus.NO_CONTENT);
     } catch (Exception e) {
         return new ResponseEntity<>("Error updating user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

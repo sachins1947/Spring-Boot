@@ -3,6 +3,7 @@ package com.example.demo.services;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,10 +20,13 @@ public class UserEntryService {
     @Autowired
     private UserEntryRepository userEntryRepository;
     private static final PasswordEncoder password = new BCryptPasswordEncoder();
-    public  void saveEntry(Users userentry){
+    public  void save_new_user(Users userentry){
         userentry.setPassword(password.encode(userentry.getPassword()));
         userentry.setRoles(Arrays.asList("USER"));
         userEntryRepository.save(userentry);
+    }
+    public void save(Users user){
+        userEntryRepository.save(user);
     }
     public List<Users> getAll(){
         return userEntryRepository.findAll();
